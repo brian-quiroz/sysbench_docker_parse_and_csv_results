@@ -1,29 +1,16 @@
 ## Description
-Run all sysbench benchmarks with their default parameters one or more times, both locally and in a docker container. Also outputs relevant results to terminal and to CSV files.
+Run all sysbench benchmarks with their default parameters one or more times, both locally and in a docker container. Also outputs relevant results to terminal and as CSV files.
 
 
 ## Instructions
-To run all benchmarks n times and (optionally) save summary of results to CSV(s):
+To run all benchmarks n times and (optionally) save summary of results as CSV(s):
 ```
-./run_benchmarks.sh [number of runs (n)] [save to CSV (1 = True, 0 = False)] [average results (1 = True, 0 = False)]
-```
-
-To view results summary of each run in terminal:
-```
-python parse_results.py 0 0
+./run_benchmarks.sh [number of runs (n)] [save as CSV] [average results]
 ```
 
-To save results summary of each run to CSV(s):
+Once you have run the above script once, you can view/save your results at any time using:
 ```
-python parse_results.py 1 0
-```
-
-To view average and standard deviation of results summary in terminal:
-```
-python parse_results.py 0 1
+python parse_results.py [save as CSV] [average results]
 ```
 
-To save average and standard deviation of results summary to (separate) CSVs:
-```
-python parse_results.py 1 1
-```
+Note that "save as CSV" and "average results" are flags (1 = activate, 0 = deactivate). If "save as CSV" is activated, the results will be saved as CSV file(s). Otherwise, the output will be printed to the command line. If "average results" is activated, the program will output the average and standard deviation of each value across all runs. Otherwise, the program will output the results of each run individually.
