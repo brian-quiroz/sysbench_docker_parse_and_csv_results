@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
   echo "Illegal number of parameters"
   exit 2
 fi
@@ -10,7 +10,7 @@ max=$1;
 
 while [ "$n" -le "$max" ]; do
   mkdir "run_$n"
-  echo "Run #$n"
+  echo "Run $n"
 
   mkdir "run_$n"/host
 
@@ -83,4 +83,4 @@ while [ "$n" -le "$max" ]; do
   n=`expr "$n" + 1`;
 done
 
-python parse_results.py $2
+python parse_results.py $2 $3

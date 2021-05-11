@@ -5,15 +5,25 @@ Run all sysbench benchmarks with their default parameters one or more times, bot
 ## Instructions
 To run all benchmarks n times and (optionally) save summary of results to CSV(s):
 ```
-./run_benchmarks.sh [number of runs (n)] [save to csv (1) or don't save to csv(0)]
-```
- 
-To view results summary in terminal (you must have run ./run_benchmarks.sh previously to create the results files used by this script):
-```
-python parse_results.py 0
+./run_benchmarks.sh [number of runs (n)] [save to CSV (1 = True, 0 = False)] [average results (1 = True, 0 = False)]]
 ```
 
-To view results summary in terminal and save to CSV(s) (you must have run ./run_benchmarks.sh previously to create the results files used by this script):
+To view results summary of each run in terminal:
 ```
-python parse_results.py 1
+python parse_results.py 0 0
+```
+
+To save results summary of each run to CSV(s):
+```
+python parse_results.py 1 0
+```
+
+To view average and standard deviation of results summary in terminal:
+```
+python parse_results.py 0 1
+```
+
+To save average and standard deviation of results summary to (separate) CSVs:
+```
+python parse_results.py 0 1
 ```

@@ -173,24 +173,60 @@ def get_values(platform_path):
     return new_dict
 
 def print_data(data):
-    for run, dict1 in data.items():
+    for run, run_dict in data.items():
         print(run)
-        df = pd.DataFrame(dict1)
+        df = pd.DataFrame(run_dict)
         print(df)
         print('\n')
 
-def print_and_save_data(data):
+def save_data(data):
     i = 1
-    for run, dict1 in data.items():
-        print(run)
-        df = pd.DataFrame(dict1)
-        print(df)
-        print('\n')
+    for run, run_dict in data.items():
+        df = pd.DataFrame(run_dict)
         df.to_csv('run_' + str(i) + '.csv')
         i += 1
 
+def compute_averages(data):
+    avg_data = {}
+    std_data = {}
+    host_dicts = []
+    docker_dicts = []
 
-def main(save):
+    for run, run_dict in data.items():
+        host_dicts.append(run_dict['host'])
+        docker_dicts.append(run_dict['docker'])
+
+    host_df = pd.DataFrame(host_dicts)
+    host_avg = dict(host_df.mean())
+    host_std = dict(host_df.std())
+    avg_data['host'] = host_avg
+    std_data['host'] = host_std
+
+    docker_df = pd.DataFrame(docker_dicts)
+    docker_avg = dict(docker_df.mean())
+    docker_std = dict(docker_df.std())
+    avg_data['docker'] = docker_avg
+    std_data['docker'] = docker_std
+
+    return avg_data, std_data
+
+def print_data_average(data):
+    avg_data, std_data = compute_averages(data)
+    avg_df = pd.DataFrame(avg_data)
+    print('\nAverages:')
+    print(avg_df)
+    print('\nStandard Deviations:')
+    std_df = pd.DataFrame(std_data)
+    print(std_df)
+
+def save_data_average(data):
+    avg_data, std_data = compute_averages(data)
+    avg_df = pd.DataFrame(avg_data)
+    avg_df.to_csv('run_avg.csv')
+    std_df = pd.DataFrame(std_data)
+    std_df.to_csv('run_std.csv')
+
+def main(save, avg):
     data = {}
     i = 1
     new_run = 'run_' + str(i)
@@ -214,15 +250,22 @@ def main(save):
         i += 1
         new_run = 'run_' + str(i)
 
-    if (save):
-        print_and_save_data(data)
+    if (avg):
+        if (save):
+            save_data_average(data)
+        else:
+            print_data_average(data)
+
     else:
-        print_data(data)
+        if (save):
+            save_data(data)
+        else:
+            print_data(data)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print('Please only input one argument!')
+    if len(sys.argv) != 3:
+        print('Please input 2 arguments!')
         sys.exit()
     try:
         save_int = int(sys.argv[1])
@@ -233,4 +276,13 @@ if __name__ == "__main__":
     except ValueError:
         print('Please use integers!')
 
-    main(save_bool)
+    try:
+        avg_int = int(sys.argv[2])
+        if (avg_int > 1 or avg_int < 0):
+            print('Please enter 0 or 1!')
+            sys.exit()
+        avg_bool = True if (avg_int == 1) else False
+    except ValueError:
+        print('Please use integers!')
+
+    main(save_bool, avg_bool)
