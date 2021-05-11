@@ -174,10 +174,10 @@ def get_values(platform_path):
 
 def print_data(data):
     for run, run_dict in data.items():
+        print('\n')
         print(run)
         df = pd.DataFrame(run_dict)
         print(df)
-        print('\n')
 
 def save_data(data):
     i = 1
@@ -226,7 +226,7 @@ def save_data_average(data):
     std_df = pd.DataFrame(std_data)
     std_df.to_csv('run_std.csv')
 
-def main(save, avg):
+def main(avg, save):
     data = {}
     i = 1
     new_run = 'run_' + str(i)
@@ -267,17 +267,9 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print('Please input 2 arguments!')
         sys.exit()
-    try:
-        save_int = int(sys.argv[1])
-        if (save_int > 1 or save_int < 0):
-            print('Please enter 0 or 1!')
-            sys.exit()
-        save_bool = True if (save_int == 1) else False
-    except ValueError:
-        print('Please use integers!')
 
     try:
-        avg_int = int(sys.argv[2])
+        avg_int = int(sys.argv[1])
         if (avg_int > 1 or avg_int < 0):
             print('Please enter 0 or 1!')
             sys.exit()
@@ -285,4 +277,13 @@ if __name__ == "__main__":
     except ValueError:
         print('Please use integers!')
 
-    main(save_bool, avg_bool)
+    try:
+        save_int = int(sys.argv[2])
+        if (save_int > 1 or save_int < 0):
+            print('Please enter 0 or 1!')
+            sys.exit()
+        save_bool = True if (save_int == 1) else False
+    except ValueError:
+        print('Please use integers!')
+
+    main(avg_bool, save_bool)
