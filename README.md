@@ -25,5 +25,5 @@ python parse_results.py 0 1
 
 To save average and standard deviation of results summary to (separate) CSVs:
 ```
-python parse_results.py 0 1
+python parse_results.py 1 1
 ```
