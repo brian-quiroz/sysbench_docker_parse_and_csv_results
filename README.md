@@ -1,5 +1,5 @@
 ## Description
-Run all sysbench benchmarks with their default parameters one or more times, both locally and in a docker container. Also outputs relevant results to terminal and to csv files.
+Run all sysbench benchmarks with their default parameters one or more times, both locally and in a docker container. Also outputs relevant results to terminal and to CSV files.
 
 
 ## Instructions
