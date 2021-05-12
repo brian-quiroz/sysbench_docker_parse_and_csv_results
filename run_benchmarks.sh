@@ -5,8 +5,13 @@ if [ "$#" -ne 3 ]; then
   exit 2
 fi
 
-n=1;
-max=$1;
+i=1
+while [ -d "run_$i" ]; do
+  i=`expr "$i" + 1`;
+done
+
+n=$i;
+max=`expr "$1" + "$n" - 1`;
 
 while [ "$n" -le "$max" ]; do
   mkdir "run_$n"
@@ -49,34 +54,34 @@ while [ "$n" -le "$max" ]; do
   mkdir "run_$n"/docker
 
   echo "Running cpu benchmark on docker..."
-  docker run giordan12/sysbench_cont:0.4 cpu run > "run_$n"/docker/cpu.txt
+  docker run --rm giordan12/sysbench_cont:0.4 cpu run > "run_$n"/docker/cpu.txt
 
   echo "Running memory benchmark on docker..."
-  docker run giordan12/sysbench_cont:0.4 memory run > "run_$n"/docker/memory.txt
+  docker run --rm giordan12/sysbench_cont:0.4 memory run > "run_$n"/docker/memory.txt
 
   echo "Running threads benchmark on docker..."
-  docker run giordan12/sysbench_cont:0.4 threads run > "run_$n"/docker/threads.txt
+  docker run --rm giordan12/sysbench_cont:0.4 threads run > "run_$n"/docker/threads.txt
 
   echo "Running mutex benchmark on docker..."
-  docker run giordan12/sysbench_cont:0.4 mutex run > "run_$n"/docker/mutex.txt
+  docker run --rm giordan12/sysbench_cont:0.4 mutex run > "run_$n"/docker/mutex.txt
 
   echo "Running fileio-seqwr on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqwr run > "run_$n"/docker/seqwr.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqwr run > "run_$n"/docker/seqwr.txt
 
   echo "Running fileio-seqrewr on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqrewr run > "run_$n"/docker/seqrewr.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqrewr run > "run_$n"/docker/seqrewr.txt
 
   echo "Running fileio-seqrd on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqrd run > "run_$n"/docker/seqrd.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=seqrd run > "run_$n"/docker/seqrd.txt
 
   echo "Running fileio-rndrd on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndrd run > "run_$n"/docker/rndrd.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndrd run > "run_$n"/docker/rndrd.txt
 
   echo "Running fileio-rndwr on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndwr run > "run_$n"/docker/rndwr.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndwr run > "run_$n"/docker/rndwr.txt
 
   echo "Running fileio-rndrw on docker..."
-  docker run giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndrw run > "run_$n"/docker/rndrw.txt
+  docker run --rm giordan12/sysbench_cont:0.4 fileio --file-test-mode=rndrw run > "run_$n"/docker/rndrw.txt
 
   rm -rf test_file*
 
