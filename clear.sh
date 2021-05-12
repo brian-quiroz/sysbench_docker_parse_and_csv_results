@@ -6,4 +6,3 @@ while [ -d "run_$i" ]; do
   i=`expr "$i" + 1`;
 done
 
-rm *.csv
